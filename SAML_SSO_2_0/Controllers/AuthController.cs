@@ -54,7 +54,8 @@ namespace SAML_SSO_2_0.Controllers
 
             var relayStateQuery = binding.GetRelayStateQuery();
             var returnUrl = relayStateQuery.ContainsKey(relayStateReturnUrl) ? relayStateQuery[relayStateReturnUrl] : Url.Content("~/");
-            return Redirect(returnUrl);
+            
+            return RedirectToAction("Register");
         }
 
         [HttpPost("Logout")]

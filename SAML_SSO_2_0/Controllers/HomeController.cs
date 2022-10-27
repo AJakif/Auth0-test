@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ITfoxtec.Identity.Saml2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SAML_SSO_2_0.Models;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,13 @@ namespace SAML_SSO_2_0.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            
+            TestModel test = new TestModel();
+            test.name = "bill";
+            test.age = 12;
+            TempData["model"] = JsonConvert.SerializeObject(test);
+            //return View();
+            return RedirectToAction("Privacy");
         }
 
         [Authorize]
@@ -32,6 +40,9 @@ namespace SAML_SSO_2_0.Controllers
 
         public IActionResult Privacy()
         {
+            TestModel test = new TestModel();
+
+            test = JsonConvert.DeserializeObject<TestModel>(TempData["model"].ToString());
             return View();
         }
 
